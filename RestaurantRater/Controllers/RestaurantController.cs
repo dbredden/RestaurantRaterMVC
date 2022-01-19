@@ -65,13 +65,7 @@ namespace RestaurantRater.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Restaurant/Eedit/{id}
-        // Get an id from the user 
-        // Handle if the id is null
-        // Find a Restaurant by that id
-        // If the restaurant doesn't exist
-        // Return the restaurant and the view 
-
+        // GET: Restaurant/Edit/{id}
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +90,21 @@ namespace RestaurantRater.Controllers
                 _db.Entry(restaurant).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            return View(restaurant);
+        }
+
+        // GET: Restaurant/Details/{id}
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Restaurant restaurant = _db.Restaurants.Find(id);
+            if (restaurant == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             return View(restaurant);
         }
